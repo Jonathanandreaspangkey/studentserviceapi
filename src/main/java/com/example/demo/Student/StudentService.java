@@ -2,9 +2,7 @@ package com.example.demo.Student;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,6 +21,12 @@ public class StudentService {
     }
 
     public void createStudent(Student student) {
+        if (student.getName() == null || student.getName().isEmpty() ||
+                student.getEmail() == null || student.getEmail().isEmpty() ||
+                student.getDob() == null) {
+            throw new IllegalArgumentException("Name, email, and dob must be provided");
+        }
+
         Optional<Student> studentOptional = studentRepository
                 .findStudentByEmail(student.getEmail());
 
@@ -42,7 +46,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void updatestudent(Long studentId, String name, String email) {
+    public void updateStudent(Long studentId, String name, String email) {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
 
         if (studentOptional.isEmpty()) {
@@ -51,7 +55,7 @@ public class StudentService {
 
         Student student = studentOptional.get();
 
-        if (name != null && !name.isEmpty() && !Objects.equals(student.getName(), name)) {
+        if (name != null && !name.isEmpty()) {
             student.setName(name);
         }
 
