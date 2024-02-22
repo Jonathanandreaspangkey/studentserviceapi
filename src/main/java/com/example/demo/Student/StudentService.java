@@ -1,10 +1,12 @@
 package com.example.demo.Student;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,5 +39,31 @@ public class StudentService {
             throw new IllegalStateException("student with that id is not exists");
         }
         studentRepository.deleteById(studentId);
+    }
+
+    @Transactional
+    public void updatestudent(Long studentId, String name, String email) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+
+        if (studentOptional.isEmpty()) {
+            throw  new IllegalStateException("Student with ID " + studentId + " does not exist");
+        }
+
+        Student student = studentOptional.get();
+
+        if (name != null && !name.isEmpty() && !Objects.equals(student.getName(), name)) {
+            student.setName(name);
+        }
+
+        if (email != null && !email.isEmpty() && !Objects.equals(student.getEmail(), email)) {
+            Optional<Student> existingStudentWithEmail = studentRepository.findStudentByEmail(email);
+            if (existingStudentWithEmail.isPresent() && !existingStudentWithEmail.get().getId().equals(studentId)) {
+                throw new IllegalStateException("Email is already taken");
+            }
+            student.setEmail(email);
+        }
+
+        studentRepository.save(student);
+
     }
 }
