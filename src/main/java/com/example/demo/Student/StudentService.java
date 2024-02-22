@@ -20,7 +20,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-//    newcode
     public void createStudent(Student student) {
         Optional<Student> studentOptional = studentRepository
                 .findStudentByEmail(student.getEmail());
