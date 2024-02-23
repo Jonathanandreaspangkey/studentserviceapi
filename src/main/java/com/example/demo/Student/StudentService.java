@@ -1,9 +1,11 @@
 package com.example.demo.Student;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -15,14 +17,20 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-
     public List<Student> getStudents() {
         return studentRepository.findAll();
     }
 
+    public Student getStudentById(Long studentId) {
+        return  studentRepository.findById(studentId)
+                .orElseThrow(() -> new NoSuchElementException("Student with that ID is not exists"));
+    }
+
     public void createStudent(Student student) {
-        if (student.getName() == null || student.getName().isEmpty() ||
-                student.getEmail() == null || student.getEmail().isEmpty() ||
+        String name = student.getName();
+        String email = student.getEmail();
+        if (StringUtils.isBlank(name) ||
+                StringUtils.isBlank(email) ||
                 student.getDob() == null) {
             throw new IllegalArgumentException("Name, email, and dob must be provided");
         }
@@ -46,20 +54,17 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudent(Long studentId, String name, String email) {
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
+    public void updateStudent(Long studentId, Student updatedStudent) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new IllegalStateException("Student with ID " + studentId + " does not exist"));
 
-        if (studentOptional.isEmpty()) {
-            throw  new IllegalStateException("Student with ID " + studentId + " does not exist");
-        }
-
-        Student student = studentOptional.get();
-
-        if (name != null && !name.isEmpty()) {
+        String name = updatedStudent.getName();
+        if (StringUtils.isNotBlank(name)) {
             student.setName(name);
         }
 
-        if (email != null && !email.isEmpty() && !Objects.equals(student.getEmail(), email)) {
+        String email = updatedStudent.getEmail();
+        if (StringUtils.isNotBlank(email)) {
             Optional<Student> existingStudentWithEmail = studentRepository.findStudentByEmail(email);
             if (existingStudentWithEmail.isPresent() && !existingStudentWithEmail.get().getId().equals(studentId)) {
                 throw new IllegalStateException("Email is already taken");
