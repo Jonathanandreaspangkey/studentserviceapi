@@ -72,6 +72,5 @@ public class StudentService {
         }
 
         studentRepository.save(student);
-
     }
 }
