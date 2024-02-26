@@ -4,7 +4,7 @@
 This is Spring boot Student Service API that manages student data within system. It allows for the creation, retrieval, updating, and deletion of student records.
 
 ## Architecture
-<img width="638" alt="Screenshot 2024-02-22 at 15 45 06" src="https://github.com/Jonathanpangkey/StudentServiceAPI/assets/102292312/a3a26e47-86e3-4d5c-8b15-d0f7001fe143">
+<img width="638" alt="Screenshot 2024-02-22 at 15 45 06" src="https://github.com/Jonathanpangkey/StudentServiceAPI/assets/102292312/a3a26e47-86e3-4d5c-8b15-d0f7001fe143"> <br/>
 The API is developed using the Spring Boot framework, leveraging Spring Data JPA for database interaction. PostgreSQL is used as the underlying database. The API follows RESTful principles for its endpoints. <br/>
 This app is structured into three layers : The API layer handles requests and responses, the service layer manages application logic, and the data access layer deals with database operations.
 ## Endpoints and Routes
