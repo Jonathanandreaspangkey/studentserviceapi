@@ -47,7 +47,7 @@ public class StudentService {
     public void deleteStudent(Long studentId) {
         boolean exists = studentRepository.existsById(studentId);
         if (!exists) {
-            throw new IllegalStateException("student with that id is not exists");
+            throw new NoSuchElementException("Student with ID " + studentId + " does not exist");
         }
         studentRepository.deleteById(studentId);
     }
@@ -55,7 +55,7 @@ public class StudentService {
     @Transactional
     public void updateStudent(Long studentId, Student updatedStudent) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new IllegalStateException("Student with ID " + studentId + " does not exist"));
+                .orElseThrow(() -> new NoSuchElementException("Student with ID " + studentId + " does not exist"));
 
         String name = updatedStudent.getName();
         if (StringUtils.isNotBlank(name)) {
