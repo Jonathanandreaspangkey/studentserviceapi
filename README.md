@@ -18,7 +18,17 @@ The following endpoints are available in the Student Service API:
 - `DELETE /api/v1/student/{studentId}` - Delete a student by ID.
 
 ## Data Models
-- **Student:** Represents a student with fields for name, email, date of birth (DOB), and age. The 'age' field is marked as transient and is calculated based on the 'dob' field.
+- **Student:**
+  - Fields:
+    - Name: String
+    - Email: String
+    - Date of Birth (DOB): LocalDate
+    - Age (Transient, calculated based on DOB): Integer
+  - **Example Student Data:**
+    - Name: "Messi"
+    - Email: "messi@gmail.com"
+    - Date of Birth: "2003-12-17"
+
 
 ## How to Use
 To utilize the Student Service API, follow these steps:
