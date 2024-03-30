@@ -10,12 +10,50 @@ This app is structured into three layers : The API layer handles requests and re
 ## Endpoints and Routes
 The following endpoints are available in the Student Service API:
 
-#### Student Routes
-- `GET /api/v1/student` - Retrieve all students.
-- `GET /api/v1/student/{studentId}` - Retrieve a student by ID.
-- `POST /api/v1/student` - Create a new student.
-- `PUT /api/v1/student/{studentId}` - Update a student by ID.
-- `DELETE /api/v1/student/{studentId}` - Delete a student by ID.
+## Student Endpoints
+
+1. **Retrieve All Students**
+   - URL: `/api/v1/student`
+   - Method: `GET`
+   - Description: Retrieves all students.
+2. **Retrieve a Student by ID**
+   - URL: `/api/v1/student/{studentId}`
+   - Method: `GET`
+   - Description: Retrieves a student by ID.
+   - Path Parameters:
+     - `studentId`: ID of the student to retrieve.
+3. **Create a New Student**
+   - URL: `/api/v1/student`
+   - Method: `POST`
+   - Description: Creates a new student.
+   - Request Body:
+     ```json
+     {
+       "name": "string",
+       "email": "string",
+       "dateOfBirth": "string"
+     }
+     ```
+4. **Update a Student by ID**
+   - URL: `/api/v1/student/{studentId}`
+   - Method: `PUT`
+   - Description: Updates a student by ID.
+   - Path Parameters:
+     - `studentId`: ID of the student to update.
+   - Request Body (optional fields):
+     ```json
+     {
+       "name": "string",
+       "email": "string",
+       "dateOfBirth": "string"
+     }
+     ```
+5. **Delete a Student by ID**
+   - URL: `/api/v1/student/{studentId}`
+   - Method: `DELETE`
+   - Description: Deletes a student by ID.
+   - Path Parameters:
+     - `studentId`: ID of the student to delete.
 
 ## Data Models
 - **Student:**
@@ -24,14 +62,10 @@ The following endpoints are available in the Student Service API:
     - Email: String
     - Date of Birth (DOB): LocalDate
     - Age (Transient, calculated based on DOB): Integer
-  - **Example Student Data:**
-    - Name: "Messi"
-    - Email: "messi@gmail.com"
-    - Date of Birth: "2003-12-17"
 
 
-## How to Use
-To utilize the Student Service API, follow these steps:
+## Clone
+If you want to use or modify this app:
 
 1. Clone the project repository.
 2. Ensure that PostgreSQL is installed and running.
