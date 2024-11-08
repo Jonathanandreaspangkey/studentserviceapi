@@ -31,12 +31,20 @@ jobs:
           source: target/*.jar
           target: /home/root/your-app-directory/
 
-      - name: Run SSH Command to Restart Application
+      - name: Run SSH Command to Restart Application with Env Vars
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Set environment variables using GitHub Secrets
+            export PROD_DB_HOST="${{ secrets.PROD_DB_HOST }}"
+            export PROD_DB_PORT="${{ secrets.PROD_DB_PORT }}"
+            export PROD_DB_NAME="${{ secrets.PROD_DB_NAME }}"
+            export PROD_DB_USERNAME="${{ secrets.PROD_DB_USERNAME }}"
+            export PROD_DB_PASSWORD="${{ secrets.PROD_DB_PASSWORD }}"
+
+            # Navigate to the app directory and run the app
             cd /home/root/your-app-directory/
             nohup java -jar /home/root/your-app-directory/target/demo-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
