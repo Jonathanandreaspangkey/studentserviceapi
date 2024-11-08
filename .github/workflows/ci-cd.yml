@@ -44,6 +44,8 @@ jobs:
             export PROD_DB_NAME="${{ secrets.PROD_DB_NAME }}"
             export PROD_DB_USERNAME="${{ secrets.PROD_DB_USERNAME }}"
             export PROD_DB_PASSWORD="${{ secrets.PROD_DB_PASSWORD }}"
+            export SPRING_PROFILES_ACTIVE="${{ secrets.SPRING_PROFILES_ACTIVE }}"
+
 
             # Navigate to the app directory and run the app
             cd /home/root/your-app-directory/
